@@ -25,7 +25,7 @@ type Program struct {
 	Statements []Statement
 }
 
-// TokenLiteral - satisfies node interface.
+// TokenLiteral - satisfies node interface, notice it is overridden (defined) on Statement
 func (p *Program) TokenLiteral() string {
 	if len(p.Statements) > 0 {
 		return p.Statements[0].TokenLiteral()
@@ -33,7 +33,7 @@ func (p *Program) TokenLiteral() string {
 	return ""
 }
 
-// LetStatement - a statement node.
+// LetStatement - a statement node. Also satisfies the Statement interface.
 type LetStatement struct {
 	Token token.Token // the token.LET token
 	Name  *Identifier
@@ -42,14 +42,14 @@ type LetStatement struct {
 
 func (ls *LetStatement) statementNode() {}
 
-// TokenLiteral - to satisfy node interface
+// TokenLiteral - Satisfy node interface, returns 'let' for example.
 func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
 
 // Identifier - for example, in `let x = 5`, Identifier is the `x`. For simplicity
 // Identifier satisfies the expression interface even though it's a statement (?).
 type Identifier struct {
 	Token token.Token // the token.IDENT token
-	Value string
+	Value string      // same as 'x', can also be fetched by Token.Literal or i.tokenLiteral()
 }
 
 func (i *Identifier) expressionNode() {}
