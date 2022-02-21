@@ -20,7 +20,7 @@ type Program struct {
 	Statements []Statement
 }
 
-// is a node
+// Program starts with a root statement node.
 func (p *Program) TokenLiteral() string {
 	if len(p.Statements) > 0 {
 		return p.Statements[0].TokenLiteral()
@@ -29,7 +29,8 @@ func (p *Program) TokenLiteral() string {
 	}
 }
 
-// Satisfies Statement and Node interfaces. 'let' statement.
+// Satisfies Statement and Node interface.
+// <LetStatement> <Name> = <Value>
 type LetStatement struct {
 	Token token.Token // the token.LET token
 	Name  *Identifier
@@ -44,7 +45,7 @@ func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
 // Satisfies Node and Expression interfaces.
 type Identifier struct {
 	Token token.Token // the token.IDENT token
-	Value string
+	Value string      // variable name as string
 }
 
 func (i *Identifier) expressionNode()      {}
